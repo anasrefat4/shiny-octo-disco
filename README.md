@@ -1,132 +1,121 @@
-🧠 MedAI-Dx: Multi-Disease AI Diagnostic System
+# MedAI-Dx: Local Deployment and Runtime Instructions
 
-MedAI-Dx is an intelligent, offline-capable diagnostic system that uses artificial intelligence to predict the presence of five major diseases:
+## 📦 Overview
 
-Brain Tumors
+MedAI-Dx is a local, modular machine learning diagnostic platform for detecting five diseases:
 
-Alzheimer's Disease
+* Brain Tumors
+* Alzheimer's Disease
+* Heart Disease
+* Skin Cancer
+* Parkinson’s Disease
 
-Heart Disease
+Each module is a standalone script using pre-trained models saved in `/modelsheart/`. A Tkinter GUI serves as the entry point for interactive testing.
 
-Skin Cancer
+---
 
-Parkinson’s Disease
+## 🗂️ Folder Structure
 
-Each module in MedAI-Dx is designed with disease-specific models, datasets, and preprocessing logic to ensure accurate and robust predictions. The system integrates all models into a user-friendly graphical interface (GUI) built with Tkinter.
-
-📁 Project Structure
-
+```
 MedAI-Dx/
-│
-├── main_menu.py                 # Launchpad for accessing each disease module
-├── modelsheart/                # Folder containing saved model files
+├── main_menu.py                  # Entry GUI for all modules
+├── brain_module.py               # Brain tumor pipeline
+├── alzheimer_module.py           # Alzheimer's pipeline
+├── heart_module.py               # Heart disease predictor
+├── skin_module.py                # Skin cancer classifier
+├── parkinson_module.py           # Parkinson's predictor
+├── processed_cleveland.csv       # Heart dataset (sample)
+├── modelsheart/                  # Folder containing all saved models
 │   ├── keras_model.h5
 │   ├── logistic_regression.pkl
 │   ├── random_forest.pkl
 │   ├── svm_model.pkl
 │   ├── gradient_boosting.pkl
-│   ├── scaler.pkl
-│   └── ...
-├── brain_module.py             # Brain tumor classifier (MRI-based)
-├── alzheimer_module.py         # Alzheimer’s MRI classifier with PCA
-├── heart_module.py             # Heart disease predictor (tabular data)
-├── skin_module.py              # Skin cancer classifier (image)
-├── parkinson_module.py         # Parkinson's predictor (voice features)
-├── processed_cleveland.csv     # Sample dataset for heart disease
-├── runheart.bat.bat            # Batch file to launch heart GUI
-├── README.md                   # This file
-└── requirements.txt            # Python dependencies
+│   └── scaler.pkl
+├── runheart.bat.bat              # Batch launcher for heart module
+├── README.md
+└── requirements.txt              # Python dependencies
+```
 
-🚀 How to Run
+---
 
-🔧 Requirements
+## ⚙️ System Requirements
 
-Python 3.8+
+* Python 3.8+
+* OS: Windows/Linux
+* Disk: At least 2 GB free space for models and test data
 
-TensorFlow
+### Required Python Packages
 
-Scikit-learn
+Install all dependencies:
 
-Pandas, NumPy
-
-Matplotlib, Seaborn
-
-Pillow, OpenCV (for image processing)
-
-sounddevice, scipy (for voice input)
-
-Install dependencies:
-
+```bash
 pip install -r requirements.txt
+```
 
-🖥️ Launch the GUI
+If needed:
 
+```bash
+pip install tensorflow scikit-learn pandas numpy matplotlib seaborn opencv-python sounddevice
+```
+
+---
+
+## 🚀 Running the System
+
+### Launch Full GUI:
+
+```bash
 python main_menu.py
+```
 
-Or use any of the provided batch files like runheart.bat.bat to launch a specific module directly.
+### Run a Specific Module:
 
-📊 Evaluation Metrics
+```bash
+python heart_module.py
+python brain_module.py
+```
 
-All models are evaluated using:
+Or via batch:
 
-Accuracy
+```bash
+./runheart.bat.bat
+```
 
-Precision, Recall, F1-score
+> Ensure that `modelsheart/` folder exists in the same directory. Models are loaded using relative paths.
 
-ROC AUC (for classifiers)
+---
 
-R² Score (for Parkinson's regression)
+## 🤖 Models Summary
 
-Results are visualized using ROC curves, confusion matrices, and comparative bar charts.
+| Module        | Model Type       | File Path                             |
+| ------------- | ---------------- | ------------------------------------- |
+| Brain Tumor   | VotingClassifier | Used via DenseNet169 features         |
+| Alzheimer's   | VotingClassifier | DenseNet169 + PCA + SVM/KNN/RF        |
+| Heart Disease | Classical ML     | `logistic_regression.pkl`, `rf`, `gb` |
+| Skin Cancer   | CNN + DNN        | Loaded via `keras_model.h5`           |
+| Parkinson’s   | SVM              | `svm_model.pkl` with `scaler.pkl`     |
 
+---
 
-🧲 Sample Datasets Used
+## 🔍 Notes for Debugging
 
-Brain Tumor: Brain MRI Dataset (Kaggle)
+* If models fail to load, verify `.pkl` and `.h5` files exist in `/modelsheart/`
+* If GUI fails, check Python Tkinter installation
+* For TensorFlow issues, use:
 
-Alzheimer’s: Alzheimer’s MRI Dataset
+```bash
+pip install tensorflow --upgrade
+```
 
-Heart Disease: UCI Cleveland Heart Dataset
+---
 
-Skin Cancer: HAM10000 Dataset
+## 🧑‍💻 Authors
 
-Parkinson’s: UCI Parkinson’s Voice Dataset
+* Anas Refaat, Kareem Abo Alazam, Yousef Wael, Mohammed Tarek, Alaa Adel
 
-🛠️ Features
+---
 
-🌟 Multi-model integration
+## 📄 License
 
-🧠 Disease-specific optimization
-
-🪪 Real-time diagnosis from local files
-
-🖼️ Clean, Tkinter-based interface
-
-🧹 Modular design for easy extension
-
-✅ Offline-capable (no API dependency)
-
-🙌 Authors
-
-Anas Refaat
-
-Kareem Abo Alazam
-
-Yousef Wael
-
-Mohammed Tarek
-
-Alaa Adel
-
-📄 License
-
-This project is intended for educational and research use only.
-
-📌 Acknowledgments
-
-UCI Machine Learning Repository
-
-Kaggle Datasets
-
-Scikit-learn, TensorFlow, Keras
-
+For academic and research use only.
